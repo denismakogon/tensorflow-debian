@@ -7,7 +7,7 @@ RUN set -ex; \
     apt-get install -y --no-install-recommends ${APT_PACKAGES}; \
     curl -L "https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.6.0.tar.gz" | tar -C /usr/local -xz; \
     ldconfig; \
-    apt-get remove --purge --auto-remove -y ${APT_PACKAGES}; \
+    apt-get remove --purge --auto-remove -y curl; \
     apt-get clean; \
     apt-get autoclean; \
     apt-get autoremove; \
