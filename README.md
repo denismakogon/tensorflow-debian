@@ -42,3 +42,24 @@ pushd build-stage && docker build -t denismakogon/tensorflow-build-stage:edge .;
 ```bash
 pushd example && docker build -t denismakogon/tensorflow-golang-test:test .;popd
 ```
+
+## Example
+
+Here's the example of a dockerfile that you need to use to build TensorFlow apps 
+with Go and package those in Docker container:
+```dockerfile
+FROM denismakogon/tensorflow-build-stage:edge as build-stage
+
+ADD . /go/src/func/
+WORKDIR /go/src/func
+RUN dep ensure -v
+RUN go build -o func
+
+FROM denismakogon/tensorflow-runtime:edge
+
+COPY --from=build-stage /go/src/func/func /function/func
+RUN /function/func
+
+ENTRYPOINT ["/function/func"]
+
+```
